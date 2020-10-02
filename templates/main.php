@@ -4,6 +4,7 @@
     <nav class="main-navigation">
         <ul class="main-navigation__list">
             <?php
+            //die(var_dump($tasks));
                 foreach ($arr_projects as $key => $value) {
                     //проверяем гет параметр
                     if($project_show==$key){
@@ -12,8 +13,8 @@
 
                     echo '
                     <li class="main-navigation__list-item '.$active_project.'">
-                        <a class="main-navigation__list-item-link" href="?show='.$key.'">'.$value.'</a>
-                        <span class="main-navigation__list-item-count">'.countProjects($tasks, $value).'</span>
+                        <a class="main-navigation__list-item-link" href="/?show='.$key.'">'.$value.'</a>
+                        <span class="main-navigation__list-item-count">'.count_tasks($author = 1, $key).'</span>
                     </li>
                     ';
                     $active_project = '';    
@@ -85,6 +86,7 @@
                 $checked = 'value="1"';
                 continue;
             } else {
+                $task_file = $value['attachment'] ? '<td class="task__file"><a class="download-link" href="'.$value['attachment'].'" download>'.str_replace('/uploads/', '', $value['filename']).'</a></td>' : '<td class="task__file"></td>';
                 echo '
                 <tr class="tasks__item task '.$mark_complete.' '.$task_important.'">
                     <td class="task__select">
@@ -93,11 +95,7 @@
                             <span class="checkbox__text">'.$value['title'].'</span>
                         </label>
                     </td>
-
-                    <td class="task__file">
-                        <a class="download-link" href="#">Home.psd</a>
-                    </td>
-
+                    '.$task_file.'
                     <td class="task__date">'.$format_date.'</td>
                 </tr>
                 ';
